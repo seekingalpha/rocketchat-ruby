@@ -50,13 +50,13 @@ module RocketChat
     def parse_response(response)
       begin
         JSON.parse(response)
-      rescue JSON::ParserError => e
+      rescue JSON::ParserError
         raise RocketChat::HTTPError, "RocketChat response parse error: #{response}"
       end
     end
 
     def check_response(response, fail_unless_ok)
-      return unless fail_unless_ok && !response.is_a?(Net::HTTPOK)
+      return if response.is_a?(Net::HTTPOK) || (fail_unless_ok && !response.is_a?(Net::HTTPServerError))
       raise RocketChat::HTTPError, "Invalid http response code: #{response.code}"
     end
 
