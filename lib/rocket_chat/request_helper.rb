@@ -28,7 +28,7 @@ module RocketChat
       response = request path, options
       check_response response, fail_unless_ok
 
-      response_json = JSON.parse(response.body)
+      response_json = parse_response(response.body)
       options[:debug].puts("Response: #{response_json.inspect}") if options[:debug]
       check_response_json response_json, upstreamed_errors
 
@@ -46,6 +46,14 @@ module RocketChat
     end
 
     private
+
+    def parse_response(response)
+      begin
+        JSON.parse(response)
+      rescue JSON::ParserError => e
+        raise RocketChat::HTTPError, "RocketChat response parse error: #{response}"
+      end
+    end
 
     def check_response(response, fail_unless_ok)
       return unless fail_unless_ok && !response.is_a?(Net::HTTPOK)
