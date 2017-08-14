@@ -107,13 +107,13 @@ module RocketChat
       #
       def add_moderator(room_id: nil, user_id: nil)
         session.request_json(
-            self.class.api_path('addModerator'),
-            method: :post,
-            body: {
-                roomId: room_id,
-                userId: user_id
-            },
-            upstreamed_errors: ['error-room-not-found']
+          self.class.api_path('addModerator'),
+          method: :post,
+          body: {
+            roomId: room_id,
+            userId: user_id
+          },
+          upstreamed_errors: ['error-room-not-found']
         )['success']
       end
 
@@ -126,13 +126,13 @@ module RocketChat
       #
       def remove_moderator(room_id: nil, user_id: nil)
         session.request_json(
-            self.class.api_path('removeModerator'),
-            method: :post,
-            body: {
-                roomId: room_id,
-                userId: user_id
-            },
-            upstreamed_errors: ['error-room-not-found']
+          self.class.api_path('removeModerator'),
+          method: :post,
+          body: {
+            roomId: room_id,
+            userId: user_id
+          },
+          upstreamed_errors: ['error-room-not-found']
         )['success']
       end
 
@@ -168,38 +168,6 @@ module RocketChat
           method: :post,
           body: room_params(room_id, name)
             .merge(user_params(user_id, username))
-        )['success']
-      end
-
-      #
-      # *.archive REST API
-      # @param [String] room_id Rocket.Chat room id
-      # @return [Boolean]
-      # @raise [HTTPError, StatusError]
-      #
-      def archive(room_id)
-        session.request_json(
-          self.class.api_path('archive'),
-          method: :post,
-          body: {
-            roomId: room_id
-          }
-        )['success']
-      end
-
-      #
-      # *.unarchive REST API
-      # @param [String] room_id Rocket.Chat room id
-      # @return [Boolean]
-      # @raise [HTTPError, StatusError]
-      #
-      def unarchive(room_id)
-        session.request_json(
-          self.class.api_path('unarchive'),
-          method: :post,
-          body: {
-            roomId: room_id
-          }
         )['success']
       end
 
