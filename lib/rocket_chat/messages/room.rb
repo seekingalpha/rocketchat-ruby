@@ -125,44 +125,6 @@ module RocketChat
       end
 
       #
-      # *.add_moderator REST API
-      # @param [String] room_id Rocket.Chat room id
-      # @param [String] user_id Rocket.Chat user id
-      # @return [Boolean]
-      # @raise [HTTPError, StatusError]
-      #
-      def add_moderator(room_id: nil, user_id: nil)
-        session.request_json(
-          self.class.api_path('addModerator'),
-          method: :post,
-          body: {
-            roomId: room_id,
-            userId: user_id
-          },
-          upstreamed_errors: ['error-room-not-found']
-        )['success']
-      end
-
-      #
-      # *.remove_moderator REST API
-      # @param [String] room_id Rocket.Chat room id
-      # @param [String] user_id Rocket.Chat user id
-      # @return [Boolean]
-      # @raise [HTTPError, StatusError]
-      #
-      def remove_moderator(room_id: nil, user_id: nil)
-        session.request_json(
-          self.class.api_path('removeModerator'),
-          method: :post,
-          body: {
-            roomId: room_id,
-            userId: user_id
-          },
-          upstreamed_errors: ['error-room-not-found']
-        )['success']
-      end
-
-      #
       # *.info REST API
       # @param [String] room_id Rocket.Chat room id
       # @param [String] name Room name (channels since 0.56)
