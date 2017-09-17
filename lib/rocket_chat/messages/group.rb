@@ -55,6 +55,15 @@ module RocketChat
         response['groups'].map { |hash| RocketChat::Room.new hash } if response['success']
       end
 
+      def list_all(query: nil)
+        response = session.request_json(
+          '/api/v1/groups.listAll',
+          body: query
+        )
+
+        response['groups'].map { |hash| RocketChat::Room.new hash } if response['success']
+      end
+
       # Keys for set_attr:
       # * [String] description A room's description
       # * [String] purpose Alias for description
