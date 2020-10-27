@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module RocketChat
   #
   # Rocket.Chat Room
@@ -78,6 +80,10 @@ module RocketChat
     # System messages (user left, got invited, room renamed, etc)
     def system_messages
       data['sysMes']
+    end
+
+    def custom_fields
+      @custom_fields ||= OpenStruct.new(data['customFields'])
     end
 
     def inspect
