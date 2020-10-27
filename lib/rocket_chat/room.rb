@@ -52,7 +52,16 @@ module RocketChat
       data['description']
     end
 
-    # Channel members
+    def member_count
+      data['usersCount']
+    end
+
+    ## AFAICT, this is BOGUS!
+    ## 'usernames' does not actually appear in any Room API call,
+    ## although it is falsely documented for `channels.list` at
+    ##   https://docs.rocket.chat/api/rest-api/methods/channels/list
+    ## Perhaps it was present in a _very_ early iteration of RC.
+    ## Call `RocketChat::Messages::Room.members` instead.
     def members
       data['usernames'] || []
     end

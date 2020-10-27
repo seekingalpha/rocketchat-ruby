@@ -218,6 +218,23 @@ module RocketChat
       end
 
       #
+      # *.members REST API
+      # @param [String] room_id Rocket.Chat room id
+      # @param [String] name Rocket.Chat room name
+      # @return [User[]]
+      #
+      def members(room_id: nil, name: nil)
+        response = session.request_json(
+          self.class.api_path('members'),
+          method: :get,
+          body: room_params(room_id, name)
+        )
+
+        response['members'].map { |hash| RocketChat::User.new hash } if response['success']
+      end
+
+
+      #
       # *.set* REST API
       # @param [String] room_id Rocket.Chat room id
       # @param [String] new_name New room name
